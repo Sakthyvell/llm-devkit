@@ -1,74 +1,76 @@
 ---
 name: plan
-description: Collaboratively draft a practical specification plan by resolving the important decisions one at a time.
-argument-hint: "<feature, problem, idea, or target file>"
+description: Make a lightweight implementation plan without wiki or documentation lookup, then wait for explicit user approval before making code changes.
+argument-hint: "<small feature, bug, refactor, or fix>; optional: with <standard>[, <standard>]"
 ---
 
-Help the user create or refine a Markdown specification plan in the root directory for the user-provided feature, problem, idea, or target file.
+Handle small planning tasks with minimum ceremony.
 
-If a question can be answered by exploring the codebase, inspect the relevant files instead of asking the user. Prefer existing project conventions, nearby implementations, tests, configuration, and documentation over assumptions.
+Use this skill when the user wants a quick plan, a small fix, a narrow refactor, or an implementation approach that does not need durable repo memory or documentation lookup.
 
-The goal is not to design the perfect solution. The goal is to create the simplest plan that solves the problem clearly and safely.
+Do not perform agent-kit wiki lookup from this skill, even when `.agent-kit/config.yml` exists. Inspect code, tests, and config only as needed to make the immediate change safely.
 
-Use this guiding question throughout:
+Do not modify code while using this skill unless the user explicitly approves the implementation plan or explicitly asks to proceed with implementation.
 
-> What is the cheapest implementation that I won't be embarrassed by in 6 months?
+## Optional standards
 
-## Planning behavior
+If the user names book standards (e.g. `with clean-code, refactoring`), apply the matching `llm-devkit-knowledge-<id>` skills as active guidance for this session only. In the source repo, valid ids are listed in `standards/catalog.md` and usage guidance is in `standards/USAGE.md`. Load at most three standards unless the user explicitly asks for more. If none are named, continue with no book bias.
 
-Resolve only the decisions that materially affect the implementation.
+## Operating mode
 
-Do not explore hypothetical future requirements, speculative edge cases, or unnecessary abstractions unless there is evidence they are needed.
+Default to planning first.
 
-Ask exactly one question at a time.
+- Inspect the relevant files, then produce a concise implementation plan.
+- If the task needs one important decision, ask exactly one concise question and recommend an answer.
+- If the task is clearly implementable, still stop after the plan and ask for approval before editing.
+- If the user approves, move into implementation, make the change, and validate it.
+- If the task turns out larger or ambiguous, produce a brief plan and call out the uncertainty before asking for approval.
+- If durable product or domain knowledge is required, recommend switching to `plan-with-docs` or `orient`.
 
-For each question:
+## Quick plan shape
 
-* Explain why the decision matters when useful.
-* Provide your recommended answer.
-* Wait for the user's answer before moving to the next question.
-* If the answer changes an earlier assumption, update the plan.
-* Skip questions that can be answered from the codebase or existing conventions.
+Keep plans small. Prefer 3-6 bullets covering:
 
-## Simplicity bias
+- Target behavior
+- Files or components likely touched
+- Implementation steps
+- Validation
+- One risk or open question, only when meaningful
 
-Prefer:
+Avoid full specification documents, wiki updates, long alternatives, and speculative future work.
 
-* Existing patterns over new patterns
-* Clear code over clever abstractions
-* Fewer moving parts over architectural elegance
-* Shipping a working version over designing an extensible version
-* Capturing future ideas as future improvements instead of implementing them now
+## Implementation approval gate
 
-Before introducing a new abstraction, service, dependency, layer, or workflow, ask:
+Before requesting approval:
 
-* What problem does this solve today?
-* What is the simpler alternative?
-* Is the added complexity justified?
+- Read the smallest useful set of files.
+- Follow nearby conventions and existing helpers.
+- Prefer localized changes over new abstractions.
+- Include focused tests in the plan when the change has behavior risk.
 
-Prefer the simpler option unless there is a clear reason not to.
+Ask for approval in plain language, such as:
 
-## Specification output
+> I can implement this plan now. Do you want me to proceed?
 
-Maintain a Markdown specification plan with only the sections that are relevant.
+Do not treat silence, vague agreement, or continued discussion as approval to edit. Proceed only after an explicit confirmation such as "yes", "approved", "go ahead", "implement it", or equivalent.
 
-Common sections include:
+After approval and editing:
 
-* Goal
-* Non-goals
-* User-facing behavior
-* Constraints and assumptions
-* Design decisions
-* Data model or interfaces, when relevant
-* Implementation steps
-* Validation and test plan
-* Open questions
-* Future improvements
+- Run the narrowest relevant validation command available.
+- If validation is not practical, explain what was checked and what remains unverified.
 
-Keep the plan actionable but not overly detailed.
+## Output
 
-The planning process is complete when the goal, scope, major decisions, implementation approach, and validation plan are clear enough to begin work.
+For planning work, provide:
 
-Do not continue asking questions once the plan is actionable.
+- The brief implementation plan
+- Files or areas likely touched
+- Validation to run
+- Any material risk or open question
+- A request for approval before implementation
 
-Do not implement code while using this skill unless the user explicitly asks to move from planning into implementation.
+For completed fixes after approval, summarize:
+
+- What changed
+- Where it changed
+- How it was validated

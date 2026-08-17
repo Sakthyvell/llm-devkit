@@ -1,4 +1,5 @@
 dist/
+.DS_Store
 .claude/
 .agent/
 .cursor/

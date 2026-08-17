@@ -12,6 +12,16 @@ Do not propose a full implementation plan yet unless the user explicitly asks fo
 
 Do not modify code while using this skill.
 
+## Wiki memory (agent-coding-kit)
+
+This skill may run in a consumer repo that uses agent-coding-kit wiki memory.
+
+- Skip wiki lookup for tiny mechanical tasks that do not require repo understanding.
+- For orientation, debugging, reviews, feature work, and investigations: if `.agent-kit/config.yml` exists, read it, resolve `wiki.root` (default `wiki`), read `{wiki.root}/index.md`, and open relevant concept pages. Also read configured `wiki.authoritative_sources` when the topic touches their roles.
+- Prefer wiki + authoritative sources for durable domain facts; verify against code when claims matter.
+- If `.agent-kit` / wiki is missing, continue with codebase-only behavior and mention that the kit wiki is not attached.
+- If you discover durable knowledge worth keeping, recommend a follow-up `wiki-write` ingest. Do not invent or silently rewrite wiki pages from this skill.
+
 ## Investigation behavior
 
 Inspect the relevant codebase files, tests, configuration, documentation, and nearby implementations.

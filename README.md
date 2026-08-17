@@ -30,11 +30,37 @@ Codex:  $llm-devkit-code-review
 Cursor: @llm-devkit-code-review
 ```
 
-V1 skills:
+Skills:
 
+- `llm-devkit-code-orient`
+- `llm-devkit-code-plan`
+- `llm-devkit-code-plan-with-docs`
 - `llm-devkit-code-review`
+- `llm-devkit-code-troubleshoot`
 - `llm-devkit-git-commit`
 - `llm-devkit-git-pr`
+- `llm-devkit-scrum-groom`
+- `llm-devkit-wiki-lint`
+- `llm-devkit-wiki-query`
+- `llm-devkit-wiki-write`
+
+Knowledge skills:
+
+- `llm-devkit-knowledge-clean-code`
+- `llm-devkit-knowledge-refactoring`
+- `llm-devkit-knowledge-release-it`
+- `llm-devkit-knowledge-django-styleguide`
+- `llm-devkit-knowledge-domain-driven-design-distilled`
+- plus the full catalog in `standards/catalog.md`
+
+Examples:
+
+```text
+Codex: $llm-devkit-code-plan with clean-code
+Codex: $llm-devkit-code-plan-with-docs with refactoring, working-effectively-with-legacy-code
+Codex: $llm-devkit-code-review with release-it
+Codex: $llm-devkit-code-review with django-styleguide
+```
 
 ## Maintenance
 
